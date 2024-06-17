@@ -1,5 +1,5 @@
 
-class SpaceTimeElement:
+class STAlgebraElement:
     def __init__(self, value):
         if isinstance(value, int) and value >= 0:
             self.value = value
@@ -15,77 +15,77 @@ class SpaceTimeElement:
         return str(self.value)
 
     def __eq__(self, x):
-        if not isinstance(x, SpaceTimeElement):
+        if not isinstance(x, STAlgebraElement):
             return NotImplemented
         return self.value == x.value
 
     def __lt__(self, x):
-        if not isinstance(x, SpaceTimeElement):
+        if not isinstance(x, STAlgebraElement):
             return NotImplemented
         if isinstance(x.value, str):
             return isinstance(self.value, int)
         return isinstance(self.value, int) and self.value < x.value
 
     def __le__(self, x):
-        if not isinstance(x, SpaceTimeElement):
+        if not isinstance(x, STAlgebraElement):
             return NotImplemented
         if isinstance(x.value, str):
             return True
         return isinstance(self.value, int) and self.value <= x.value
 
 
-STE = SpaceTimeElement
+STAE = STAlgebraElement
 
-inf = STE('∞')
+inf = STAE('∞')
 
 # 1-ary primitives
 
-def st_id(a: STE) -> STE:
+def st_id(a: STAE) -> STAE:
     return a
 
-def st_inc(a: STE) -> STE:
-    return a if a == inf else STE(a.value + 1)
+def st_inc(a: STAE) -> STAE:
+    return a if a == inf else STAE(a.value + 1)
 
 # 2 -ary primitives
 
 ## commutative
 
-def st_min(a: STE, b: STE) -> STE:
+def st_min(a: STAE, b: STAE) -> STAE:
     return a if a <= b else b
 
-def st_max(a: STE, b: STE) -> STE:
+def st_max(a: STAE, b: STAE) -> STAE:
     return a if a >= b else b
 
-def st_xmin(a: STE, b: STE) -> STE:
+def st_xmin(a: STAE, b: STAE) -> STAE:
     return a if a < b else b if b < a else inf
 
-def st_xmax(a: STE, b: STE) -> STE:
+def st_xmax(a: STAE, b: STAE) -> STAE:
     return a if a > b else b if b > a else inf
 
-def st_eq(a: STE, b: STE) -> STE:
+def st_eq(a: STAE, b: STAE) -> STAE:
     return a if a == b else inf
 
 ## non-commutative
 
-def st_neq(a: STE, b: STE) -> STE:
+def st_neq(a: STAE, b: STAE) -> STAE:
     return a if a != b else inf
 
-def st_lt(a: STE, b: STE) -> STE:
+def st_lt(a: STAE, b: STAE) -> STAE:
     return a if a < b else inf
 
-def st_lte(a: STE, b: STE) -> STE:
+def st_lte(a: STAE, b: STAE) -> STAE:
     return a if a <= b else inf
 
-def st_gt(a: STE, b: STE) -> STE:
+def st_gt(a: STAE, b: STAE) -> STAE:
     return a if a > b else inf
 
-def st_gte(a: STE, b: STE) -> STE:
+def st_gte(a: STAE, b: STAE) -> STAE:
     return a if a >= b else inf
     
 
 def run():
-    st0 = STE(0)
-    st1 = STE(1)
+    st0 = STAE(0)
+    st1 = STAE(1)
     print(f"{st0} + 1 = {st_inc(st0)}")
     print(f"{st1} + 1 = {st_inc(st1)}")
     print(f"{inf} + 1 = {st_inc(inf)}")
